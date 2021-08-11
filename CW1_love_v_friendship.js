@@ -1,6 +1,7 @@
 function wordsToMarks(string){
   const letterSum = Array.from(string).reduce((sum, element) => {
     return sum + element.codePointAt(0) - 96;
-  },0);
-  return letterSum
+  }, 0);
+
+  return letterSum;
 }

@@ -5,5 +5,5 @@ function wordsToMarks(string){
     letterSum += string.codePointAt(i) - '`'.codePointAt(0);
   }
   
-  return letterSum
+  return letterSum;
 }

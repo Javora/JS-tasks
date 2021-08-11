@@ -1,4 +1,4 @@
-function multipleOfIndex(array) { //note - deleting elements with splice while using for each does not work, using my own for loop would likely work
+function multipleOfIndex(array) { //note - deleting elements with splice while using forEach does not work, using my own for loop would likely work
    const filteredArray = [];
    array.forEach((element, index) => {
      console.log('trying', index, element)
@@ -6,6 +6,6 @@ function multipleOfIndex(array) { //note - deleting elements with splice while u
          filteredArray.push(element);
       }
    });
-   
-   return filteredArray
+
+   return filteredArray;
 }

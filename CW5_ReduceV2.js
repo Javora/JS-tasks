@@ -2,7 +2,7 @@ function grow(x){ //using forEach and multiplying and returning a separate varia
     const arrayIterator = x[Symbol.iterator]();
     let grownArray = 1;
     for (const element of arrayIterator) {
-      grownArray *= element
+      grownArray *= element;
     }
-    return grownArray
+    return grownArray;
   }
