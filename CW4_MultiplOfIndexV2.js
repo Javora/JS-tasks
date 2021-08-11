@@ -1,7 +1,9 @@
-function multipleOfIndex(array) { //note - deleting elements with splice while using forEach does not work, using my own for loop would likely work
+/*note - deleting elements with splice while using forEach does not work,
+ because it does not account for deleting elements and therefore it skips an element*/
+
+function multipleOfIndex(array) {
    const filteredArray = [];
    array.forEach((element, index) => {
-     console.log('trying', index, element)
       if (element % index === 0) {
          filteredArray.push(element);
       }
