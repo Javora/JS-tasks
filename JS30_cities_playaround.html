@@ -19,15 +19,19 @@
       const endpoint =
         "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
       const queryData = [];
+
       fetch(endpoint)
         .then((response) => response.json())
         .then((data) => queryData.push(...data));
+
       document
         .getElementsByClassName("search")[0]
         .addEventListener("input", (e) => {
           const resultsList = document.getElementsByClassName("results")[0];
           resultsList.innerHTML = "";
-          const searchText = e.target.value;
+
+          const searchText = e.target.value.toLowerCase();
+
           if (searchText) {
             const cities = queryData
               .filter(
@@ -40,7 +44,6 @@
                 locationElement.innerHTML = `${location.city} - ${location.state}`;
                 return locationElement;
               });
-            console.log(cities);
             cities.forEach((city) => resultsList.appendChild(city));
           }
         });
