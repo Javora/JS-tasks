@@ -108,10 +108,16 @@
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
       fetch(
-        "https://en.wikipedia.org/w/api.php?format=json&action=query&cmlimit=max&list=categorymembers&cmtitle=Category:Boulevards_in_Paris"
+        "https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&cmlimit=max&list=categorymembers&cmtitle=Category:Boulevards_in_Paris"
       )
         .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((data) =>
+          console.log(
+            data.query.categorymembers.filter((boulevard) =>
+              boulevard.title.includes(" de ")
+            )
+          )
+        );
 
       // 7. sort Exercise
       // Sort the people alphabetically by last name
