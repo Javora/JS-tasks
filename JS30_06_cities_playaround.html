@@ -29,11 +29,11 @@
 
       document
         .getElementsByClassName("search")[0]
-        .addEventListener("input", (e) => {
+        .addEventListener("input", (inputEvent) => {
           const resultsList = document.getElementsByClassName("results")[0];
           resultsList.innerHTML = "";
 
-          const searchText = e.target.value;
+          const searchText = inputEvent.target.value;
 
           if (searchText) {
             const cities = queryData
