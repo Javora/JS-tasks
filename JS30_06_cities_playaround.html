@@ -21,7 +21,7 @@
       const queryData = [];
 
       const toLowerCaseIncludes = (string, includeString) =>
-        string.toLowerCase().includes(includeString);
+        string.toLowerCase().includes(includeString.toLowerCase());
 
       fetch(endpoint)
         .then((response) => response.json())
@@ -33,7 +33,7 @@
           const resultsList = document.getElementsByClassName("results")[0];
           resultsList.innerHTML = "";
 
-          const searchText = e.target.value.toLowerCase();
+          const searchText = e.target.value;
 
           if (searchText) {
             const cities = queryData
