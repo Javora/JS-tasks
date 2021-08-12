@@ -20,6 +20,9 @@
         "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
       const queryData = [];
 
+      const toLowerCaseIncludes = (string, includeString) =>
+        string.toLowerCase().includes(includeString);
+
       fetch(endpoint)
         .then((response) => response.json())
         .then((data) => queryData.push(...data));
@@ -36,8 +39,8 @@
             const cities = queryData
               .filter(
                 (location) =>
-                  location.city.toLowerCase().includes(searchText) ||
-                  location.state.toLowerCase().includes(searchText)
+                  toLowerCaseIncludes(location.city, searchText) ||
+                  toLowerCaseIncludes(location.state, searchText)
               )
               .map((location) => {
                 const locationElement = document.createElement("li");
