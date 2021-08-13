@@ -90,11 +90,11 @@
 
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
-      const inventorsByBirthdate = [
-        ...inventors.sort(
+      const inventorsByBirthdate =
+        [...inventors].sort(
           (firstPerson, secondPerson) => firstPerson.year - secondPerson.year
         ),
-      ];
+      ;
       console.log(inventorsByBirthdate);
 
       const yearsLived = (person) => person.passed - person.year;
