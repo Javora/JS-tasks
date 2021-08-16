@@ -24,19 +24,17 @@
         { text: "Nice Nice Nice!", id: 542328 },
       ];
 
-      const CURRENT_YEAR = 2021;
+      const CURRENT_YEAR = 2021; //Alternative - new Date().getFullYear()
       const MINIMUM_AGE = 19;
+
+      const isOldEnough = (person) => CURRENT_YEAR - person.year >= MINIMUM_AGE;
 
       // Some and Every Checks
       // Array.prototype.some() // is at least one person 19 or older?
-      console.log(
-        people.some((person) => CURRENT_YEAR - person.year >= MINIMUM_AGE)
-      );
+      console.log(people.some((person) => isOldEnough(person)));
 
       // Array.prototype.every() // is everyone 19 or older?
-      console.log(
-        people.every((person) => CURRENT_YEAR - person.year >= MINIMUM_AGE)
-      );
+      console.log(people.every((person) => isOldEnough(person)));
 
       // Array.prototype.find()
       // Find is like filter, but instead returns just the one you are looking for
@@ -51,7 +49,8 @@
       comments.splice(
         comments.findIndex((comment) => comment.id === TARGET_ID),
         1
-      );
+      ); /*Could be done with filter, but there is no need to use Array.prototype.findIndex(),
+           so it does not seem like the intended solution (probably would be cleaner though)*/
       console.log(comments);
     </script>
   </body>

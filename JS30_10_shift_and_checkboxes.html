@@ -106,6 +106,7 @@
             const currentChecked = checkboxList.findIndex(
               (input) => input === clickEvent.target
             );
+
             checkboxList.forEach((input, index) => {
               if (index > firstChecked && index < currentChecked)
                 input.checked = true;

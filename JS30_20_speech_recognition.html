@@ -5,13 +5,14 @@
     <title>Speech Detection</title>
   </head>
   <body>
-    <div class="words" contenteditable></div>
+    <div id="noteblock" class="words" contenteditable></div>
 
     <script>
-      const noteBlock = document.getElementsByClassName("words")[0];
+      const noteBlock = document.getElementById("noteblock");
 
       window.SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
+
       const recognition = new SpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
