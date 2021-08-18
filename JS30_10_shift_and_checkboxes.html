@@ -97,21 +97,26 @@
     <script>
       const checkboxList = Array.from(document.getElementsByTagName("input"));
 
+      let lastChecked = 0;
+
       checkboxList.forEach((checkbox) => {
         checkbox.addEventListener("click", (clickEvent) => {
-          if (clickEvent.shiftKey && clickEvent.target.checked) {
-            const firstChecked = checkboxList.findIndex(
-              (input) => input.checked
-            );
+          if (clickEvent.shiftKey) {
             const currentChecked = checkboxList.findIndex(
               (input) => input === clickEvent.target
             );
 
             checkboxList.forEach((input, index) => {
-              if (index > firstChecked && index < currentChecked)
-                input.checked = true;
+              if (
+                (index >= lastChecked && index <= currentChecked) ||
+                (index <= lastChecked && index >= currentChecked)
+              )
+                input.checked = clickEvent.target.checked;
             });
           }
+          lastChecked = checkboxList.findIndex(
+            (input) => input === clickEvent.target
+          );
         });
       });
     </script>

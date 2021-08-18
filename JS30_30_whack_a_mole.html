@@ -30,6 +30,7 @@
         background-image: url(./MoleImg.png);
         background-size: contain;
         background-repeat: no-repeat;
+        display: none;
         width: 140px;
         height: 140px;
         margin: auto;
@@ -67,33 +68,53 @@
       const scoreBoard = document.querySelector(".score");
       const moles = document.querySelectorAll(".mole");
 
-      let started = false;
+      const GAME_LOOP_TIME_MS = 200;
+      const APPEAR_PROBABILITY = 0.03;
+      const DISAPPEAR_MIN_TIME_MS = 500;
+      const DISAPPEAR_MAX_ADDITIONAL_TIME_MS = 500;
 
-      function setTimeoutIndefinite(mole) {
-        setTimeout(() => {
-          mole.style.display = "none";
-          console.log("hiding it");
-          setTimeout(() => {
-            if (started) {
-              mole.style.display = "block";
-            }
-            setTimeoutIndefinite(mole);
-          }, Math.random() * 5000 + 500);
-        }, Math.random() * 1000 + 200);
+      function displayMole(mole) {
+        mole.style.display = "block";
+      }
+
+      function hideMole(mole) {
+        mole.style.display = "none";
       }
 
       moles.forEach((mole) => {
-        mole.style.display = "none";
-        setTimeoutIndefinite(mole);
+        hideMole(mole);
         mole.addEventListener("click", () => {
-          scoreBoard.textContent = +scoreBoard.textContent + 1;
+          scoreBoard.textContent = Number(scoreBoard.textContent) + 1;
+          hideMole(mole);
         });
       });
+
+      function gameLoop() {
+        moles.forEach((mole) => {
+          if (mole.style.display === "none") {
+            if (Math.random() > 1 - APPEAR_PROBABILITY) {
+              displayMole(mole);
+
+              const clearTimeoutFunction = () => {
+                clearTimeout(timeout);
+                mole.removeEventListener("click", clearTimeoutFunction);
+              };
+
+              mole.addEventListener("click", clearTimeoutFunction);
+
+              const timeout = setTimeout(() => {
+                mole.removeEventListener("click", clearTimeoutFunction);
+                hideMole(mole);
+              }, Math.random() * DISAPPEAR_MAX_ADDITIONAL_TIME_MS + DISAPPEAR_MIN_TIME_MS);
+            }
+          }
+        });
+      }
 
       function startGame() {
         scoreBoard.textContent = 0;
 
-        started = true;
+        setInterval(gameLoop, GAME_LOOP_TIME_MS);
       }
     </script>
   </body>

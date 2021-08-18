@@ -64,7 +64,7 @@
       <li data-time="12:39">Video 56</li>
       <li data-time="1:56">Video 57</li>
       <li data-time="5:04">Video 58</li>
-      <li data-time="13:59:20">Video 58</li>
+      <li data-time="13:58:20">Video 58</li>
     </ul>
     <script>
       const videoList = Array.from(document.getElementsByTagName("li"));
@@ -72,9 +72,11 @@
       const videoTimeCombined = videoList.reduce(
         (sum, videoLi) => {
           const videoLengthSplit = videoLi.dataset.time.split(":");
-          sum.seconds += +videoLengthSplit[videoLengthSplit.length - 1];
-          sum.minutes += +videoLengthSplit[videoLengthSplit.length - 2];
-          sum.hours += +(videoLengthSplit[videoLengthSplit.length - 3] ?? 0);
+          sum.seconds += Number(videoLengthSplit[videoLengthSplit.length - 1]);
+          sum.minutes += Number(videoLengthSplit[videoLengthSplit.length - 2]);
+          sum.hours += Number(
+            videoLengthSplit[videoLengthSplit.length - 3] ?? 0
+          );
 
           if (sum.seconds >= 60) {
             sum.minutes += 1;

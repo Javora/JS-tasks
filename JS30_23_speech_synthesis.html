@@ -8,7 +8,12 @@
       rel="stylesheet"
       type="text/css"
     />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      textarea {
+        width: 300px;
+        height: 24px;
+      }
+    </style>
   </head>
   <body>
     <div class="voiceinator">
@@ -40,20 +45,23 @@
       function populateVoiceList() {
         voices = synth.getVoices();
 
-        for (let i = 0; i < voices.length; i++) {
-          var option = document.createElement("option");
-          option.textContent = voices[i].name + " (" + voices[i].lang + ")";
+        voices.forEach((voiceOption) => {
+          let option = document.createElement("option");
+          option.textContent = voiceOption.name + " (" + voiceOption.lang + ")";
 
-          if (voices[i].default) {
+          if (voiceOption.default) {
             option.textContent += " -- DEFAULT";
           }
 
-          option.setAttribute("data-lang", voices[i].lang);
-          option.setAttribute("data-name", voices[i].name);
+          //better to use value on option element - but than you lose the option to have multiple values in different objects
+          option.setAttribute("data-lang", voiceOption.lang);
+          option.setAttribute("data-name", voiceOption.name);
           voicesDropdown.appendChild(option);
-        }
+        });
       }
 
+      /*Due to speech synthesis being an experimental feature this is required for chrome (firefox and other browsers
+        returns getVoices() immediately, but for chrome you have to wait before voices load)*/
       populateVoiceList();
       if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = populateVoiceList;
@@ -66,18 +74,17 @@
       );
 
       function textToSpeech() {
+        synth.cancel();
+
         msg.rate = options[0].value;
         msg.pitch = options[1].value;
         msg.text = options[2].value;
 
-        voices.forEach((voice) => {
-          if (
+        msg.voice = voices.find(
+          (voice) =>
             voice.name ===
             voicesDropdown.options[voicesDropdown.selectedIndex].dataset.name
-          ) {
-            msg.voice = voice;
-          }
-        });
+        );
 
         synth.speak(msg);
       }
